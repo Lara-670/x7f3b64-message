@@ -1,19 +1,20 @@
+/* ================= RESET ================= */
 html, body {
   margin: 0;
   width: 100%;
   height: 100%;
-  overflow: hidden;
-  position: fixed;
+  overflow-x: hidden;
   overscroll-behavior: none;
 }
 
+/* ================= BODY ================= */
 body {
   position: relative;
   background: linear-gradient(to bottom, #FFF0F5, #FFB6C1);
   font-family: Arial, sans-serif;
 }
 
-/* Main heart */
+/* ================= MAIN HEART ================= */
 .main-heart {
   width: 300px;
   position: absolute;
@@ -29,7 +30,7 @@ body {
   100% { transform: translateX(-50%) scale(1); }
 }
 
-/* Text box */
+/* ================= TEXT BOX ================= */
 #text {
   position: absolute;
   top: 320px;
@@ -44,10 +45,9 @@ body {
   font-size: 18px;
   white-space: pre-line;
   box-shadow: 0 0 10px rgba(255,255,255,0.1);
-  overflow: visible;
 }
 
-/* Buttons */
+/* ================= BUTTONS ================= */
 #buttons {
   position: absolute;
   top: calc(320px + var(--text-height, 150px) + 20px);
@@ -61,8 +61,6 @@ body {
   width: 150px;
   cursor: pointer;
   transition: transform 0.2s, filter 0.1s;
-  outline: none;
-  border: none;
   -webkit-tap-highlight-color: transparent;
   user-select: none;
   -webkit-user-drag: none;
@@ -73,17 +71,13 @@ body {
   filter: brightness(0.85);
 }
 
-#buttons img:focus {
-  outline: none;
-}
-
-/* Floating hearts */
+/* ================= FLOATING HEARTS ================= */
 .hearts {
   width: 5%;
   min-width: 100px;
   height: 25%;
   min-height: 250px;
-  position: fixed;   
+  position: fixed;
   bottom: 0;
   z-index: 10;
   pointer-events: none;
@@ -99,12 +93,11 @@ body {
   width: 50%;
   min-width: 50px;
   opacity: 0;
-  animation: floating-heart 10s infinite cubic-bezier(0.5,0.5,0.5,0.5);
+  animation: floating-heart 10s infinite;
 }
 
 .heart img {
   width: 100%;
-  height: auto;
   display: block;
 }
 
@@ -123,37 +116,10 @@ body {
 .heart:nth-child(3){ animation-delay:3.5s; }
 .heart:nth-child(4){ animation-delay:4.5s; }
 
-/* --- Mobile scaling (~40% bigger) --- */
-@media screen and (max-width: 768px) {
-  .main-heart {
-    width: 420px; /* 300px × 1.4 */
-    top: 112px;   /* 80px × 1.4 */
-  }
-
-  #text {
-    width: 490px;        /* 350px × 1.4 */
-    padding: 21px 28px;  /* 15/20 × 1.4 */
-    font-size: 25px;     /* 18px × 1.4 */
-    top: 448px;          /* 320px × 1.4 */
-  }
-
-  #buttons img {
-    width: 210px;        /* 150px × 1.4 */
-  }
-
-  #buttons {
-    top: calc(448px + var(--text-height, 150px) * 1.4 + 28px);
-  }
-
-  .hearts {
-    min-width: 140px;    /* 100px × 1.4 */
-    min-height: 350px;   /* 250px × 1.4 */
-  }
-
-  .heart {
-    min-width: 70px;     /* 50px × 1.4 */
-    min-height: 70px;    /* 50px × 1.4 */
+/* ================= MOBILE SCALE (THE FIX) ================= */
+@media (max-width: 768px) {
+  body {
+    transform: scale(1.4);
+    transform-origin: top center;
   }
 }
-
-
