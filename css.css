@@ -1,113 +1,120 @@
+/* reset + basic page */
+* { box-sizing: border-box; }
 html, body {
   margin: 0;
+  padding: 0;
   width: 100%;
-  height: 100%;
-  overflow: hidden;
-  position: fixed;
-  overscroll-behavior: none;
-}
-
-
-body {
-  position: relative;
+  min-height: 100vh;
+  overflow-x: hidden; /* prevent horizontal scroll */
   background: linear-gradient(to bottom, #FFF0F5, #FFB6C1);
   font-family: Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
+/* center container (we keep elements absolute for the visual design) */
+body {
+  position: relative;
+}
+
+/* MAIN HEART (responsive) */
 .main-heart {
-  width: 300px;
+  width: clamp(220px, 45vw, 420px); /* grows on small screens, caps on desktop */
   position: absolute;
-  top: 80px;
+  top: clamp(60px, 12vh, 110px);
   left: 50%;
   transform: translateX(-50%);
   animation: beat 1s infinite;
+  user-select: none;
+  -webkit-user-drag: none;
 }
-
 @keyframes beat {
   0%   { transform: translateX(-50%) scale(1); }
   50%  { transform: translateX(-50%) scale(1.2); }
   100% { transform: translateX(-50%) scale(1); }
 }
 
+/* TEXT BOX (responsive) */
 #text {
   position: absolute;
-  top: 320px;
   left: 50%;
   transform: translateX(-50%);
-  width: 350px;
-  padding: 15px 20px;
+  top: clamp(300px, 38vh, 460px);
+  width: clamp(300px, 86vw, 520px);
+  padding: 1.0rem 1.2rem;
   background: #FFF5EE;
   border-radius: 12px;
   text-align: center;
   color: #E37383;
-  font-size: 18px;
+  font-size: clamp(16px, 4.5vw, 26px);
+  line-height: 1.4;
   white-space: pre-line;
-  box-shadow: 0 0 10px rgba(255,255,255,0.1);
-  overflow: visible;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+  z-index: 5;
+  pointer-events: auto;
 }
 
+/* BUTTONS: positioned dynamically by JS but centered horizontally */
 #buttons {
   position: absolute;
-  top: calc(320px + var(--text-height, 150px) + 20px);
   left: 50%;
   transform: translateX(-50%);
   display: flex;
-  gap: 10px;
+  gap: clamp(8px, 3vw, 18px);
+  z-index: 6;
+  pointer-events: auto;
 }
 
+/* button images (responsive) */
 #buttons img {
-  width: 150px;
+  width: clamp(120px, 36vw, 220px);
+  max-width: 90%;
   cursor: pointer;
-  transition: transform 0.2s, filter 0.1s;
+  transition: transform .12s ease, filter .08s ease;
   outline: none;
   border: none;
   -webkit-tap-highlight-color: transparent;
   user-select: none;
   -webkit-user-drag: none;
+  height: auto;
+  display: block;
+  border-radius: 10px;
 }
 
-#buttons img:active {
-  transform: scale(0.95);
-  filter: brightness(0.85);
-}
+#buttons img:active { transform: scale(.95); filter: brightness(.88); }
 
-#buttons img:focus {
-  outline: none;
-}
-
+/* FLOATING HEARTS (columns on the left/right) */
 .hearts {
-  width: 5%;
-  min-width: 100px;
-  height: 25%;
-  min-height: 250px;
-  position: fixed;   
+  width: 6%;
+  min-width: clamp(90px, 12vw, 150px);
+  height: 28%;
+  min-height: clamp(220px, 30vh, 380px);
+  position: fixed;
   bottom: 0;
-  z-index: 10;
+  z-index: 3;
   pointer-events: none;
 }
 
 .hearts.left { left: 0; }
 .hearts.right { right: 0; }
 
+/* individual heart - sizes responsive so they remain visible on phone */
 .heart {
   position: absolute;
-  height: 50%;
-  min-height: 50px;
   width: 50%;
-  min-width: 50px;
+  min-width: clamp(40px, 6vw, 75px);
+  height: 50%;
+  min-height: clamp(40px, 6vw, 75px);
   opacity: 0;
-  animation: floating-heart 10s infinite cubic-bezier(0.5,0.5,0.5,0.5);
+  animation: floating-heart 10s infinite cubic-bezier(.5,.5,.5,.5);
 }
 
-.heart img {
-  width: 100%;
-  height: auto;
-  display: block;
-}
+.heart img { width: 100%; height: auto; display: block; }
 
+/* animation path */
 @keyframes floating-heart {
   0%   { opacity:0; bottom:0%; left:0%; }
-  10%  { opacity:1; bottom:20%; left:70%; }
+  10%  { opacity:1; bottom:20%; left:70%; transform: translateX(0); }
   20%  { bottom:40%; left:10%; }
   30%  { bottom:60%; left:50%; }
   40%  { opacity:1; bottom:80%; left:5%; }
@@ -120,4 +127,8 @@ body {
 .heart:nth-child(3){ animation-delay:3.5s; }
 .heart:nth-child(4){ animation-delay:4.5s; }
 
-
+/* small screens tweaks (optional) */
+@media (max-width: 420px) {
+  #text { padding: 0.9rem 1rem; }
+  .main-heart { top: clamp(50px, 10vh, 100px); }
+}
