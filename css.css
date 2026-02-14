@@ -1,20 +1,19 @@
-/* ================= RESET ================= */
 html, body {
   margin: 0;
   width: 100%;
   height: 100%;
-  overflow-x: hidden;
+  overflow: hidden;
+  position: fixed;
   overscroll-behavior: none;
 }
 
-/* ================= BODY ================= */
+
 body {
   position: relative;
   background: linear-gradient(to bottom, #FFF0F5, #FFB6C1);
   font-family: Arial, sans-serif;
 }
 
-/* ================= MAIN HEART ================= */
 .main-heart {
   width: 300px;
   position: absolute;
@@ -30,7 +29,6 @@ body {
   100% { transform: translateX(-50%) scale(1); }
 }
 
-/* ================= TEXT BOX ================= */
 #text {
   position: absolute;
   top: 320px;
@@ -45,9 +43,9 @@ body {
   font-size: 18px;
   white-space: pre-line;
   box-shadow: 0 0 10px rgba(255,255,255,0.1);
+  overflow: visible;
 }
 
-/* ================= BUTTONS ================= */
 #buttons {
   position: absolute;
   top: calc(320px + var(--text-height, 150px) + 20px);
@@ -61,6 +59,8 @@ body {
   width: 150px;
   cursor: pointer;
   transition: transform 0.2s, filter 0.1s;
+  outline: none;
+  border: none;
   -webkit-tap-highlight-color: transparent;
   user-select: none;
   -webkit-user-drag: none;
@@ -71,13 +71,16 @@ body {
   filter: brightness(0.85);
 }
 
-/* ================= FLOATING HEARTS ================= */
+#buttons img:focus {
+  outline: none;
+}
+
 .hearts {
   width: 5%;
   min-width: 100px;
   height: 25%;
   min-height: 250px;
-  position: fixed;
+  position: fixed;   
   bottom: 0;
   z-index: 10;
   pointer-events: none;
@@ -93,11 +96,12 @@ body {
   width: 50%;
   min-width: 50px;
   opacity: 0;
-  animation: floating-heart 10s infinite;
+  animation: floating-heart 10s infinite cubic-bezier(0.5,0.5,0.5,0.5);
 }
 
 .heart img {
   width: 100%;
+  height: auto;
   display: block;
 }
 
@@ -116,10 +120,4 @@ body {
 .heart:nth-child(3){ animation-delay:3.5s; }
 .heart:nth-child(4){ animation-delay:4.5s; }
 
-/* ================= MOBILE SCALE (THE FIX) ================= */
-@media (max-width: 768px) {
-  body {
-    transform: scale(1.4);
-    transform-origin: top center;
-  }
-}
+
